@@ -5,29 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yay! ❤️</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Soft romantic gradient for Yes page */
+        body {
+            background: linear-gradient(135deg, #ffe6e6, #fff0f5);
+        }
+
+        /* Optional: bigger header for Yes page */
+        .header_text {
+            font-size: 3em;
+            color: #d32f2f;
+        }
+
+        /* Photo styling */
+        .us-image {
+            margin-top: 20px;
+            max-width: 80%;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(255,0,100,0.3);
+        }
+    </style>
 </head>
 <body>
+    <!-- Floating hearts container -->
     <div class="hearts-container"></div>
+
     <div class="container">
         <h1 class="header_text">Knew you would say yes! 💕</h1>
+
+        <!-- Celebration GIF -->
         <div class="gif_container">
             <img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExMmo3c3l5ODh3ZGN6NHhhaDE2Mjg1ZjkwOXczdDFxbWM3dTBtaW9zaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/9XY4f3FgFTT4QlaYqa/giphy.gif">
         </div>
+
+        <!-- Your personal photo -->
         <div class="photo-container">
             <img src="us.jpg" alt="Us" class="us-image">
         </div>
     </div>
+
+    <!-- Background music -->
+    <audio id="bg-music" autoplay loop>
+        <source src="love_song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Scripts -->
     <script src="script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <script>
-        // Confetti burst when Yes page loads
+        // Confetti burst on page load
         setTimeout(() => {
             confetti({
                 particleCount: 200,
                 spread: 160,
-                origin: { y: 0.6 }
+                origin: { y: 0.6 },
+                shapes: ['heart'],
+                colors: ['#ff4d6d', '#ff99cc', '#ff66aa']
             });
         }, 500);
+
+        // Click-to-pop hearts
+        document.addEventListener('click', function(e) {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.textContent = '💖';
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            heart.style.fontSize = '30px';
+            document.body.appendChild(heart);
+
+            heart.animate([
+                { transform: 'translateY(0) scale(1)', opacity: 1 },
+                { transform: 'translateY(-100px) scale(1.5)', opacity: 0 }
+            ], {
+                duration: 1000,
+                easing: 'ease-out',
+                fill: 'forwards'
+            });
+
+            setTimeout(() => heart.remove(), 1000);
+        });
     </script>
 </body>
 </html>
