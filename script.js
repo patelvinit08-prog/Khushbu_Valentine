@@ -1,18 +1,34 @@
-// Floating hearts
+// Floating hearts with gentle drift
 function createHeart() {
     const heart = document.createElement('div');
     heart.className = 'heart';
     heart.textContent = '❤️';
-    heart.style.left = Math.random() * window.innerWidth + 'px';
-    heart.style.fontSize = 20 + Math.random() * 20 + 'px';
-    heart.style.animationDuration = 3 + Math.random() * 2 + 's';
+
+    let startX = Math.random() * window.innerWidth;
+    heart.style.left = startX + 'px';
+    heart.style.fontSize = 20 + Math.random() * 15 + 'px';
+
+    let duration = 6 + Math.random() * 3; // 6-9s
     document.querySelector('.hearts-container').appendChild(heart);
-    setTimeout(() => heart.remove(), 5000);
+
+    // Animate hearts with horizontal drift
+    let drift = (Math.random() - 0.5) * 100; // -50 to +50px
+    heart.animate([
+        { transform: `translate(0px, 0px)` },
+        { transform: `translate(${drift}px, -110vh)` }
+    ], {
+        duration: duration * 1000,
+        easing: 'linear',
+        fill: 'forwards'
+    });
+
+    setTimeout(() => heart.remove(), duration * 1000);
 }
 
-setInterval(createHeart, 300);
+// Spawn hearts
+setInterval(createHeart, 1000);
 
-// "No" button prank messages
+// "No" button messages
 const messages = [
     "Are you sure?",
     "Really sure??",
@@ -37,7 +53,7 @@ function handleNoClick() {
     yesButton.style.fontSize = `${currentSize * 1.2}px`;
 }
 
-// "Yes" button redirects to yes page
+// "Yes" button
 function handleYesClick() {
     window.location.href = "yes_page.html";
 }
