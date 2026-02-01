@@ -6,12 +6,11 @@
     <title>Yay! ❤️</title>
     <link rel="stylesheet" href="styles.css">
     <style>
-        /* Soft romantic gradient for Yes page */
+        /* Soft romantic gradient */
         body {
             background: linear-gradient(135deg, #ffe6e6, #fff0f5);
         }
 
-        /* Optional: bigger header for Yes page */
         .header_text {
             font-size: 3em;
             color: #d32f2f;
@@ -27,7 +26,7 @@
     </style>
 </head>
 <body>
-    <!-- Floating hearts container -->
+    <!-- Floating hearts -->
     <div class="hearts-container"></div>
 
     <div class="container">
@@ -45,7 +44,7 @@
     </div>
 
     <!-- Background music -->
-    <audio id="bg-music" autoplay loop>
+    <audio id="bg-music" loop>
         <source src="love_song.mp3" type="audio/mpeg">
         Your browser does not support the audio element.
     </audio>
@@ -85,6 +84,17 @@
             });
 
             setTimeout(() => heart.remove(), 1000);
+        });
+
+        // Autoplay-safe background music
+        window.addEventListener('DOMContentLoaded', () => {
+            const audio = document.getElementById('bg-music');
+            audio.play().catch(() => {
+                console.log("Audio autoplay blocked; will play on first click.");
+                document.body.addEventListener('click', () => {
+                    audio.play();
+                }, { once: true });
+            });
         });
     </script>
 </body>
